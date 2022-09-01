@@ -1,6 +1,7 @@
 const express = require('express')
 
 const app = express()
+app.use(express.json())
 
 /*
 GET - Buscar Informação dentro do servidor
@@ -10,7 +11,19 @@ PATCH - Alterar Informação Especifica
 DELETE - Deleta as informações especificas
 */
 
+
+/*
+ Tipos de Parametros
+
+ # Route Params => indentificador/seletor
+ # Query params => Paginação / Filtro
+ # Body Params => Os Objetos inserçãp/alteração (Json)
+*/
+
 app.get('/courses', (req, res)=>{
+    const query = req.query;
+    console.log(query)
+    
     return res.json([
         "Curso 1",
         "Curso 2",
@@ -19,6 +32,10 @@ app.get('/courses', (req, res)=>{
 })
 
 app.post('/courses', (req, res)=>{
+    const body = req.body;
+    console.log(body)
+
+
     return res.json([
         "Curso 1",
         "Curso 2",
@@ -27,7 +44,9 @@ app.post('/courses', (req, res)=>{
     ])
 })
 
-app.put('/cousers/:id', (req, res)=>{
+app.put('/courses/:id', (req, res)=>{
+    const {id}  = req.params;
+    console.log(id)
     return res.json([
         "Curso 6",
         "Curso 2",
@@ -37,7 +56,7 @@ app.put('/cousers/:id', (req, res)=>{
 
 })
 
-app.patch('/cousers/:id', (req, res)=>{
+app.patch('/courses/:id', (req, res)=>{
     return res.json([
         "Curso 1",
         "Curso 2",
@@ -46,7 +65,7 @@ app.patch('/cousers/:id', (req, res)=>{
     ])
 })
 
-app.delete('/cousers/:id', (req, res)=>{
+app.delete('/courses/:id', (req, res)=>{
     return res.json([
         "Curso 1",
         "Curso 2",
@@ -54,4 +73,5 @@ app.delete('/cousers/:id', (req, res)=>{
     ])
 
 })
+
 app.listen(3333)
