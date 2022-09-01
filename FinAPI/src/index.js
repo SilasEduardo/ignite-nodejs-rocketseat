@@ -1,12 +1,20 @@
+const { request } = require('express');
 const express = require('express');
 
 const app = express()
 
-app.get("/", (req, res)=>{
-    res.json({
-        nome: "Silas", 
-        age: 23,
-    })
+/*
+ # CPF - string
+ # name - string 
+ # id - uuid
+ # stantement []
+*/
+
+app.post("/account", (req, res) => {
+    const cpf = request.body;
+
+    
+
 })
 
 app.listen(3333)
