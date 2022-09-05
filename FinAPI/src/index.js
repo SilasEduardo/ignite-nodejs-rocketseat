@@ -86,7 +86,7 @@ app.post("/deposit", verifyIfExistsAccountCPF, (req, res)=>{
 
     const statementOperation = {
         description: description,
-        amount: description,
+        amount: amount,
         created_at: new Date(),
         type: "credit",
     }
@@ -159,7 +159,33 @@ app.get("/account", verifyIfExistsAccountCPF, (req, res)=>{
 
 
     return res.status(200).json(customer)
+
     
 })
+
+// Deletar conta
+app.delete("/account", verifyIfExistsAccountCPF, (req, res)=>{
+    const {  customer } = req;
+
+    customers.splice(customer, 1);
+
+    return res.status(204).json({
+        'mes': "Deletado consucesso"
+    })
+
+})
+
+//buscar Banlance
+app.get("/balance", verifyIfExistsAccountCPF, (req, res)=>{
+    const {customer} = req;
+
+    const balance = getBalance(customer.statement)
+
+    return res.json(balance)
+
+
+
+})
+
 
 app.listen(3333)
