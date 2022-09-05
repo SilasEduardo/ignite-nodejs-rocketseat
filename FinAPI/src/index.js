@@ -53,15 +53,41 @@ app.post("/account", (req, res)=>{
         'msg': 'Usuario criado com sucesso.'
     }); 
 
-})
+});
 
 
-
+//Estrato Bancario
 app.get('/statement/', verifyIfExistsAccountCPF, (req, res)=>{
 
     const { customer} = req;
   
-    return res.json(customer.statement)
+    return res.json(customer.statement) // Buscando Estrado
+});
+
+
+
+// Depositar
+app.post("/deposit", verifyIfExistsAccountCPF, (req, res)=>{
+    const {description, amount} = req.body;
+
+    const { customer} = req;
+
+    const statementOperation = {
+        description: description,
+        amount: amount,
+        created_at: new Date(),
+        type: "credit"
+
+    }
+
+    customer.statement.push(statementOperation);
+
+    return res.status(201).json({
+        "msg": "Deposito feito com sucesso!"
+    })
+
 })
+
+
 
 app.listen(3333);
