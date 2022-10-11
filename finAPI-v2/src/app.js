@@ -40,6 +40,7 @@ routes.post('/account', (req, res)=>{
 
 routes.get('/statemet', verifyquiExistCPF, (req, res)=>{
      const {customer} = req
+     
 
     return res.status(201).json(customer.statemet)
 
@@ -86,6 +87,27 @@ routes.get('/account', verifyquiExistCPF, (req, res)=>{
 
     return res.status(201).json(customer)
 })
+
+
+routes.put('/update', verifyquiExistCPF, (req, res)=>{
+    const {customer} = req
+    const {name} = req.body
+
+    customer.name = name;
+
+    return res.status(201).json({"msg": "successfully updated"})
+});
+
+routes.delete('/account', verifyquiExistCPF, (req, res)=>{
+    const {customer} = req
+
+    bd_accounts.slice(customer, 1)
+
+    return res.status(201).json({"msg": "successfully deleted"})
+});
+
+
+
 
 
 
