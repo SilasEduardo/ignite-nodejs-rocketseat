@@ -34,7 +34,7 @@ routes.post('/account', (req, res)=>{
         statemet: []
     })
 
-    res.status(201).send(bd_accounts)
+   return res.status(201).send(bd_accounts)
 });
 
 
@@ -58,7 +58,7 @@ routes.post('/deposit', verifyquiExistCPF, (req, res)=>{
     customer.amount += amount
 
 
-    res.status(201).json({"msg": "Deposito deposit successfully"})
+   return res.status(201).json({"msg": "Deposito deposit successfully"})
 });
 
 
@@ -68,7 +68,7 @@ routes.post('/withdraw', verifyquiExistCPF, (req, res)=>{
     
     const checkAmount = bd_accounts.some((value) => value.amount >= amount);
 
-    if(!checkAmount) return res.status(404).json({"msg": "not enough parsley"})
+    if(!checkAmount) return res.status(404).json({"msg": "not enough parsley"});
 
     customer.statemet.push({ 
         description: "withdraw",
@@ -77,7 +77,14 @@ routes.post('/withdraw', verifyquiExistCPF, (req, res)=>{
     });
     customer.amount -= amount
 
-    res.status(201).json({"msg": "successfully cash out"})
+   return res.status(201).json({"msg": "successfully cash out"})
+});
+
+
+routes.get('/account', verifyquiExistCPF, (req, res)=>{
+    const {customer} = req
+
+    return res.status(201).json(customer)
 })
 
 
