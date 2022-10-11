@@ -4,7 +4,7 @@ const routes = require('./src/app');
 app.use(routes);
 
 
-app.listen(3333, ()=>{
+app.listen(3000, ()=>{
     console.log('SERVER ON')
 });
 

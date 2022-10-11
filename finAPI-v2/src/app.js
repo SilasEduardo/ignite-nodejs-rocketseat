@@ -30,11 +30,8 @@ routes.post('/account', (req, res)=>{
         cpf,
         name,
         id: uuidv4(),
-        statemet: [
-            {
-                saldo: 0
-            }
-        ]
+        amount: 0,
+        statemet: []
     })
 
     res.status(201).send(bd_accounts)
@@ -47,6 +44,24 @@ routes.get('/statemet', verifyquiExistCPF, (req, res)=>{
     return res.status(201).json(customer.statemet)
 
 })
+
+routes.post('/deposit', verifyquiExistCPF, (req, res)=>{
+    const {description, amount} = req.body
+    const {customer} = req
+    
+
+    customer.statemet.push({ 
+        description,
+        amount,
+        date: new Date()
+    });
+    customer.amount += amount
+
+
+    res.status(201).json({"msg": "Deposito deposit successfully"})
+})
+
+
 
 
 
