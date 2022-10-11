@@ -59,7 +59,30 @@ routes.post('/deposit', verifyquiExistCPF, (req, res)=>{
 
 
     res.status(201).json({"msg": "Deposito deposit successfully"})
+});
+
+
+routes.post('/withdraw', verifyquiExistCPF, (req, res)=>{
+    const {amount} = req.body
+    const {customer} = req
+    
+    const checkAmount = bd_accounts.some((value) => value.amount >= amount);
+
+    if(!checkAmount) return res.status(404).json({"msg": "not enough parsley"})
+
+    customer.statemet.push({ 
+        description: "withdraw",
+        amount,
+        date: new Date()
+    });
+    customer.amount -= amount
+
+    res.status(201).json({"msg": "successfully cash out"})
 })
+
+
+
+
 
 
 
