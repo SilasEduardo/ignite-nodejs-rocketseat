@@ -5,9 +5,21 @@ const bd_accounts = []
 routes.use(express.json())
 
 
+function verifyquiExistCPF(req, res, next){
+    const {cpf} = req.headers;
+
+    const custumer = bd_accounts.find((customer) => customer.cpf === cpf)
+
+    if(!custumer)return res.status(400).json({"Error": "Customer not found"})
+
+    req.customer = custumer
+
+    return next()
+}
+
 routes.post('/account', (req, res)=>{
     const {cpf, name} = req.body;
-
+    
     const userCPFexistent = bd_accounts.some((customer) => customer.cpf === cpf);
 
     if(userCPFexistent)return res.status(400).json({
@@ -18,23 +30,24 @@ routes.post('/account', (req, res)=>{
         cpf,
         name,
         id: uuidv4(),
-        statemet: []
+        statemet: [
+            {
+                saldo: 0
+            }
+        ]
     })
 
     res.status(201).send(bd_accounts)
 });
 
 
-routes.get('/statemet/:cpf', (req, res)=>{
-    const {cpf} = req.params;
-
-    const customer = bd_accounts.find((customer) => customer.cpf === cpf);
-
-    if(!customer)return res.status(400).json({"Erro": "Customer no exist"});
-   
+routes.get('/statemet', verifyquiExistCPF, (req, res)=>{
+     const {customer} = req
 
     return res.status(201).json(customer.statemet)
 
 })
+
+
 
 module.exports = routes
