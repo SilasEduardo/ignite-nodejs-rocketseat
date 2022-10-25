@@ -1,15 +1,9 @@
-const Account = require('../models/Account');
-const {v4: uuidv4} = require('uuid')
+;const Account = require('../models/Account');
 
 exports.createAccount = async (req, res) => {
-    try{
-        
-        const {body} = req
-
-        await Account.create(body)
-        res.status(201).send('Salvo con sucesso')
-    }catch(e){
-        res.status(500).send(`Erro: ${e}`)
-    }
+    const account = new Account(req.body)
+    await account.createAccount();
+    if(account.errors.length > 0 )return res.status(400).send(account.errors);
     
+    res.send("Salvo com sucesso")  
 }
