@@ -20,6 +20,7 @@ class Account{
     constructor(body){
         this.body = body;
         this.errors = []
+        this.Account = Account;
     }
 
     validator(){
@@ -29,7 +30,8 @@ class Account{
     }
 
     async createAccount(){
-       this.validator()
+        try{
+            this.validator()
         this.body = {
              id: uuid(),
              cpf: this.body.cpf,
@@ -42,12 +44,27 @@ class Account{
        await this.userExists()
        if(this.errors.length > 0) return
        await AccountModal.create(this.body)
+
+        }catch(e){
+            console.log(e)
+        }
+
+       
      }
      async userExists(){
-        const user = await AccountModal.findOne({cpf: this.body.cpf});
-        if(user) this.errors.push('Usuario já existe')
-        return
+        try{
+            const user = await AccountModal.findOne({cpf: this.body.cpf});
+            if(user) this.errors.push('Usuario já existe')
+            return
+        } catch(e){
+            console.log(e)
+        }
+       
       }
+
+    async statement(){
+       return await AccountModal.find({cpf: this.body.cpf})
+    }
   
     
 }

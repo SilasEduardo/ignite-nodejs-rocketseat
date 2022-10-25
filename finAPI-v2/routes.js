@@ -6,6 +6,7 @@ routes.use(express.json())
 
 
 routes.post('/account', accountCotrller.createAccount)
+routes.post('/account', accountCotrller.createAccount)
 
 
 module.exports = routes;
