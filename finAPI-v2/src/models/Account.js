@@ -3,10 +3,8 @@ const {v4: uuid} = require('uuid')
 const validator = require('validator')
 const bcryptjs = require('bcryptjs')
 
-const {Schema, Types: {ObjectId}} = mongoose
 
-
-const AccountSchema = new Schema({
+const AccountSchema = new mongoose.Schema({
     cpf: {type: String, required: true},
     name: {type: String, required: true},
     email: {type: String, required: true},
@@ -20,7 +18,6 @@ class Account{
     constructor(body){
         this.body = body;
         this.errors = []
-        this.Account = Account;
     }
 
     validator(){
@@ -63,10 +60,10 @@ class Account{
       }
 
     async statement(){
-       return await AccountModal.find({cpf: this.body.cpf})
+       const post = await AccountModal.findOne({ cpf: req.params.cpf }).populate([{path: 'statement'}])
+       return post
     }
   
-    
 }
 
 module.exports = Account

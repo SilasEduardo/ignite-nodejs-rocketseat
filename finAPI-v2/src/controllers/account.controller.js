@@ -18,5 +18,6 @@ exports.createAccount = async (req, res) => {
 exports.statement = (req, res) =>{
     const account = new Account(req.body)
 
-   res.send(account.statement()) 
+    res.send(account.statement)
+   
 }
