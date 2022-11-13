@@ -11,6 +11,10 @@ function createCourse(req, res) {
         educator: 'Silas',
         duration: 10
     });
+    CreateCourseService_1.default.execute({
+        name: 'React',
+        educator: 'Silas',
+    });
     return res.send();
 }
 exports.createCourse = createCourse;
