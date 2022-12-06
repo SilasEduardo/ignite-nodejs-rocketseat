@@ -9,7 +9,7 @@ const app = express();
 app.use(routes)
 app.use(verifiqueUserExist.userexist)
 
-mongooseConnected(CONNECTED_DB, app)
+mongooseConnected(CONNECTED_DB, app) // connect mongo db
 
 app.on('done', ()=>{
     app.listen(PORT, ()=>{
