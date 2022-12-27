@@ -1,10 +1,11 @@
 import express from 'express';
-import homeRoutes from './src/routes/homeRoutes';
+import homeRoures from './src/routes/homeRoutes';
 
 class App {
   constructor() {
     this.app = express();
     this.middlewares();
+    this.routes();
   }
 
   middlewares() {
@@ -13,7 +14,7 @@ class App {
   }
 
   routes() {
-    this.app.use(homeRoutes);
+    this.app.use('/', homeRoures);
   }
 }
 
