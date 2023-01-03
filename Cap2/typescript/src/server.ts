@@ -1,12 +1,10 @@
-import express from 'express'
-import { createCourse } from './routes/routes';
+import express from "express";
 
 const app = express();
 
-
-app.get('/', createCourse)
-
-app.listen(3333, ()=>{
-    console.log('SERVER ON')
-})
-
+app.get('/', (req, res) => {
+    res.json('Cheguei');
+});
+app.listen(3333, ()=> {
+    console.log("Server on");
+});
