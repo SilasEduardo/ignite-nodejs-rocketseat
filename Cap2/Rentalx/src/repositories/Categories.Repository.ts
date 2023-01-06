@@ -21,6 +21,10 @@ class CategoriesRepository {
 
         this.catecories.push(category);
     }
+
+    list(): CategoriesModel[]{
+        return this.catecories
+    }
 };
 
 export { CategoriesRepository };
