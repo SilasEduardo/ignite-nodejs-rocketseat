@@ -8,9 +8,11 @@ const categoryRepository = new CategoriesRepository
 categoriesRoutes.post('/' , (req, res) => {
     const {name, description} = req.body;
 
-    categoryRepository.create({name, description})
+    const nameExist = categoryRepository.findByName(req.body.name)
+    if(nameExist)return res.status(401).send();
 
-    res.status(201).send()
+    categoryRepository.create({name, description});
+    res.status(201).send();
 });
 
 
